@@ -67,12 +67,12 @@ router.get("/:idRaza", async (req, res) => {
   const dbTemperament = await Race_Temper.findAll({
     where: { RaceId: idRaza },
   });
-  let raceTemperaments = "";
+  let raceTemperaments = [];
   dbTemperament.forEach((temp, i) => {
     const tempId = temp.dataValues.TemperId;
     Temper.findByPk(tempId).then((temper) => {
+      raceTemperaments.push(temper.dataValues.name);
       if (i === dbTemperament.length - 1) {
-        raceTemperaments = raceTemperaments + `${temper.dataValues.name}`;
         return res.json({
           name: dbRace.dataValues.name,
           height: dbRace.dataValues.height,
@@ -80,8 +80,6 @@ router.get("/:idRaza", async (req, res) => {
           lifeYears: dbRace.dataValues.lifeYears,
           temperament: raceTemperaments,
         });
-      } else {
-        raceTemperaments = raceTemperaments + `${temper.dataValues.name}, `;
       }
     });
     // const tempData = await Temper.findByPk(tempId);
@@ -93,6 +91,42 @@ router.get("/:idRaza", async (req, res) => {
     // }
     // console.log(raceTemperaments);
   });
+});
+
+router.post("/", async (req, res) => {
+  const { id, name, temperaments, weight, height, lifeYears } = req.body;
+
+  if (!id || !name || !weight || !height) {
+    return res.status(404).send("Faltan datos");
+  }
+
+  const createdRace = await Race.findByPk(id);
+  if (createdRace) {
+    return res.status(400).send("Esta raza ya ha sido creada");
+  }
+
+  const newRace = await Race.create({
+    id,
+    name,
+    weight,
+    height,
+    lifeYears,
+  });
+  // temperaments debería ser un objeto con 2 propiedades, una que contenga temperamentos ya creados, y otra con temperamentos a crear
+  // debo crear los temperamentos que no existan y luego crear la relación entre raza y temperamentos
+  if (temperaments.toCreate) {
+    temperaments.toCreate.forEach(async (temp) => {
+      await newRace.createTemper({ name: temp });
+    });
+  }
+
+  if (temperaments.created) {
+    temperaments.created.forEach(async (temp) => {
+      const tempId = await Temper.findOne({ where: { name: temp } });
+      await newRace.addTemper(tempId.dataValues.id);
+    });
+  }
+  return res.send("La raza ha sido creada con éxito");
 });
 
 module.exports = router;
