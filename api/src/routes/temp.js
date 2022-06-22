@@ -18,11 +18,12 @@ router.get("/", async (req, res) => {
     return temperaments.indexOf(temp) === index;
   });
   filteredTemperaments.forEach(async (temp) => {
-    const createdTemp = await Temper.create({ name: temp });
+    const existTemp = await Temper.findOne({ where: { name: temp } });
+    if (!existTemp) {
+      const createdTemp = await Temper.create({ name: temp });
+    }
   });
-  return res.send(
-    "Los temperamentos se han añadido a la base de datos correctamente"
-  );
+  return res.json(filteredTemperaments);
 });
 
 module.exports = router;
