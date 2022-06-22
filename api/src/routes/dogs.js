@@ -126,7 +126,7 @@ router.post("/", async (req, res) => {
       await newRace.addTemper(tempId.dataValues.id);
     });
   }
-  return res.send("La raza ha sido creada con éxito");
+  return res.send({ msg: "La raza ha sido creada con éxito", data: newRace });
 });
 
 module.exports = router;
