@@ -1,0 +1,18 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import "./card.css";
+
+function Card({ name, image, temperament, weight, id }) {
+  return (
+    <div className="card">
+      <Link to={`/dogs/${id}`}>
+        <h2>{name}</h2>
+        <img src={image} alt={name} />
+        <p>{temperament}</p>
+        <p>{weight} kgs</p>
+      </Link>
+    </div>
+  );
+}
+
+export default Card;

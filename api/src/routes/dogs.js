@@ -6,6 +6,10 @@ const { Race, Op, Race_Temper, Temper } = require("../db");
 router.get("/", async (req, res) => {
   const { name } = req.query;
 
+  const totalApiData = await axios.get(
+    "https://api.thedogapi.com/v1/breeds?api_key=29117eac-fbd3-4f74-9260-69b8c2959c19"
+  );
+
   if (!name) {
     const apiData = await axios.get(
       "https://api.thedogapi.com/v1/breeds?api_key=29117eac-fbd3-4f74-9260-69b8c2959c19"
@@ -14,6 +18,7 @@ router.get("/", async (req, res) => {
     const data = apiData.data.concat(dbData);
     const neededData = data.map((dog) => {
       return {
+        id: dog.id,
         name: dog.name,
         image: dog.image.url,
         temperament: dog.temperament,
@@ -29,15 +34,63 @@ router.get("/", async (req, res) => {
   const dogDbData = await Race.findAll({
     where: { name: { [Op.iLike]: name } },
   });
+
   if (dogDbData.length > 0) {
     const totalData = dogApiData.data.concat(dogDbData[0].dataValues);
-    if (totalData.length === 0) {
+    const neededData = data.map((dog) => {
+      const dogImage = totalApiData.data.find((doggie) => {
+        return doggie.id === dog.id;
+      });
+
+      if (dogImage) {
+        return {
+          id: dog.id,
+          name: dog.name,
+          image: dogImage.image.url,
+          temperament: dog.temperament,
+          weight: dog.weight,
+        };
+      } else {
+        return {
+          id: dog.id,
+          name: dog.name,
+          image: false,
+          temperament: dog.temperament,
+          weight: dog.weight,
+        };
+      }
+    });
+    if (neededData.length === 0) {
       return res.json("No se encontró el perro");
     } else return res.json(totalData);
   } else {
     if (dogApiData.data.length === 0) {
       return res.json("No se encontró el perro");
-    } else return res.json(dogApiData.data);
+    } else {
+      const neededData = dogApiData.data.map((dog) => {
+        const dogImage = totalApiData.data.find((doggie) => {
+          return doggie.id === dog.id;
+        });
+        if (dogImage) {
+          return {
+            id: dog.id,
+            name: dog.name,
+            image: dogImage.image.url,
+            temperament: dog.temperament,
+            weight: dog.weight,
+          };
+        } else {
+          return {
+            id: dog.id,
+            name: dog.name,
+            image: false,
+            temperament: dog.temperament,
+            weight: dog.weight,
+          };
+        }
+      });
+      return res.json(neededData);
+    }
   }
 });
 

@@ -8,17 +8,17 @@ function reducer(state = initialState, action) {
     case "GET_RACES":
       return {
         ...state,
-        races: payload,
+        races: action.payload,
       };
     case "GET_RACE_BY_NAME":
       return {
         ...state,
-        races: payload,
+        races: action.payload,
       };
     case "GET_RACE_BY_ID":
       return {
         ...state,
-        races: payload,
+        races: action.payload,
       };
     case "CREATE_RACE":
       return {
@@ -27,7 +27,7 @@ function reducer(state = initialState, action) {
     case "GET_TEMPERAMENTS":
       return {
         ...state,
-        temperaments: payload,
+        temperaments: action.payload,
       };
     default:
       return { ...state };
