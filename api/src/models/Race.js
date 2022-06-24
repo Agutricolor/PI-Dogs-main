@@ -5,9 +5,10 @@ module.exports = (sequelize) => {
     "Race",
     {
       id: {
-        type: DataTypes.STRING(3),
-        allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,

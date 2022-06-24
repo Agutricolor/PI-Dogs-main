@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getRaceByName } from "../../redux/actions";
 import "./searchbar.css";
 
-function SearchBar() {
+function SearchBar({ paged }) {
   const dispatch = useDispatch();
   const [race, setRace] = useState("");
 
@@ -16,6 +16,7 @@ function SearchBar() {
     e.preventDefault();
     dispatch(getRaceByName(race));
     setRace("");
+    paged(1);
   };
 
   return (
