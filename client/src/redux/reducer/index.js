@@ -1,5 +1,6 @@
 const initialState = {
   races: [],
+  showRaces: [],
   temperaments: [],
 };
 
@@ -9,16 +10,19 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         races: action.payload,
+        showRaces: action.payload,
       };
     case "GET_RACE_BY_NAME":
       return {
         ...state,
         races: action.payload,
+        showRaces: action.payload,
       };
     case "GET_RACE_BY_ID":
       return {
         ...state,
         races: action.payload,
+        showRaces: action.payload,
       };
     case "CREATE_RACE":
       return {
@@ -28,6 +32,16 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         temperaments: action.payload,
+      };
+    case "FILTER_BY_TEMPERAMENT":
+      const races = state.races;
+      const filteredRaces = races.filter((race) => {
+        if (race.temperament) return race.temperament.includes(action.payload);
+        return false;
+      });
+      return {
+        ...state,
+        showRaces: filteredRaces,
       };
     default:
       return { ...state };

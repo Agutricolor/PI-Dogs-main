@@ -48,9 +48,13 @@ export const getTemperaments = () => (dispatch) => {
   axios
     .get("http://localhost:3001/temperaments")
     .then((r) => {
-      return dispatch({ type: "GET_TEMPERAMENTS", payload: r });
+      return dispatch({ type: "GET_TEMPERAMENTS", payload: r.data });
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const filterByTemperament = (temperament) => (dispatch) => {
+  return dispatch({ type: "FILTER_BY_TEMPERAMENT", payload: temperament });
 };

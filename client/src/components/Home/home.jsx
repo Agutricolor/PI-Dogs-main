@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRaces } from "../../redux/actions";
 import Card from "../Card/card";
-import SearchBar from "../Searchbar/searchbar";
+import Navbar from "../Navbar/navbar";
 
 function Home() {
   const dispatch = useDispatch();
-  const races = useSelector((state) => state.races);
+  const races = useSelector((state) => state.showRaces);
   const [page, setPage] = useState(1);
   const [elementsByPage] = useState(8);
   const lastElementIndex = page * elementsByPage;
@@ -41,7 +41,7 @@ function Home() {
 
   return (
     <div className="home">
-      <SearchBar paged={changePage} />
+      <Navbar paged={changePage} />
       <button onClick={handlePrev}>Prev</button>
       <span>Page {page}</span>
       <button onClick={handleNext}>Next</button>
