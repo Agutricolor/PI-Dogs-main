@@ -14,18 +14,44 @@ router.get("/", async (req, res) => {
     const apiData = await axios.get(
       "https://api.thedogapi.com/v1/breeds?api_key=29117eac-fbd3-4f74-9260-69b8c2959c19"
     );
-    const dbData = await Race.findAll();
-    const data = apiData.data.concat(dbData);
-    const neededData = data.map((dog) => {
+    const neededData = apiData.data.map((dog) => {
       return {
         id: dog.id,
         name: dog.name,
-        image: dog.image.url,
+        image: dog.image
+          ? dog.image.url
+          : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png",
         temperament: dog.temperament,
         weight: dog.weight,
       };
     });
-    return res.json(neededData);
+
+    const dbData = await Race.findAll({
+      include: {
+        model: Temper,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    const dbRealData = dbData.map((r) => {
+      const temperaments = r.Tempers.map((t) => {
+        return t.name;
+      });
+      const temperament = temperaments.join(", ");
+      return {
+        id: r.id,
+        name: r.name,
+        weight: r.weight,
+        temperament: temperament,
+      };
+    });
+    // const asd = dbData.map(async (r) => {
+    //   const temperId = await Race_Temper.findAll({ where: { RaceId: r.id } });
+    // });
+    return res.json(dbRealData.concat(neededData));
   }
 
   const dogApiData = await axios.get(
@@ -37,7 +63,7 @@ router.get("/", async (req, res) => {
 
   if (dogDbData.length > 0) {
     const totalData = dogApiData.data.concat(dogDbData[0].dataValues);
-    const neededData = data.map((dog) => {
+    const neededData = totalData.map((dog) => {
       const dogImage = totalApiData.data.find((doggie) => {
         return doggie.id === dog.id;
       });
@@ -147,38 +173,42 @@ router.get("/:idRaza", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { id, name, temperaments, weight, height, lifeYears } = req.body;
+  const { name, temperaments, weight, height, lifeYears } = req.body;
 
-  if (!id || !name || !weight || !height) {
+  if (!name || !weight || !height) {
     return res.status(404).send("Faltan datos");
   }
 
-  const createdRace = await Race.findByPk(id);
-  if (createdRace) {
-    return res.status(400).send("Esta raza ya ha sido creada");
-  }
+  // const createdRace = await Race.findByPk(id);
+  // if (createdRace) {
+  //   return res.status(400).send("Esta raza ya ha sido creada");
+  // }
 
   const newRace = await Race.create({
-    id,
     name,
     weight,
     height,
     lifeYears,
   });
+  // console.log(newRace.__proto__);
   // temperaments debería ser un objeto con 2 propiedades, una que contenga temperamentos ya creados, y otra con temperamentos a crear
   // debo crear los temperamentos que no existan y luego crear la relación entre raza y temperamentos
-  if (temperaments.toCreate) {
-    temperaments.toCreate.forEach(async (temp) => {
+  if (temperaments) {
+    temperaments.forEach(async (temp) => {
+      const temperament = await Temper.findOne({ where: { name: temp } });
+      if (temperament) {
+        await newRace.setTempers(temperament.dataValues.id);
+      }
       await newRace.createTemper({ name: temp });
     });
   }
 
-  if (temperaments.created) {
-    temperaments.created.forEach(async (temp) => {
-      const tempId = await Temper.findOne({ where: { name: temp } });
-      await newRace.addTemper(tempId.dataValues.id);
-    });
-  }
+  // if (temperaments.created) {
+  //   temperaments.created.forEach(async (temp) => {
+  //     const tempId = await Temper.findOne({ where: { name: temp } });
+  //     await newRace.addTemper(tempId.dataValues.id);
+  //   });
+  // }
   return res.send({ msg: "La raza ha sido creada con éxito", data: newRace });
 });
 

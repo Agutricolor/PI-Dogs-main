@@ -12,7 +12,7 @@ function Home() {
   const lastElementIndex = page * elementsByPage;
   const firstElementIndex = lastElementIndex - elementsByPage;
   const actualElements = races.slice(firstElementIndex, lastElementIndex);
-  const amountOfPages = Math.ceil(races.length / 8);
+  const amountOfPages = races.length > 1 ? Math.ceil(races.length / 8) : 1;
   // console.log(actualElements);
   // console.log("1", races);
   // console.log("2", races[0]);

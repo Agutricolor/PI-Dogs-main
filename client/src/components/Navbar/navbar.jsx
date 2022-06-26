@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByTemperament, getTemperaments } from "../../redux/actions";
+import {
+  filterByApiOrDb,
+  filterByTemperament,
+  getTemperaments,
+} from "../../redux/actions";
 import SearchBar from "../Searchbar/searchbar";
 
 function Navbar({ paged }) {
@@ -9,13 +13,22 @@ function Navbar({ paged }) {
   //   console.log(temperaments);
 
   const [temp, setTemp] = useState("");
+  const [filter, setFilter] = useState("");
 
-  const handleChange = (e) => {
+  const handleChangeTemp = (e) => {
     e.preventDefault();
     setTemp(e.target.value);
     dispatch(filterByTemperament(e.target.value));
+    paged(1);
   };
   //   console.log(temp);
+
+  const handleChangeFilter = (e) => {
+    e.preventDefault();
+    setFilter(e.target.value);
+    dispatch(filterByApiOrDb(e.target.value));
+    paged(1);
+  };
 
   useEffect(() => {
     dispatch(getTemperaments());
@@ -23,11 +36,16 @@ function Navbar({ paged }) {
 
   return (
     <div className="navbar">
+      <select value={filter} onChange={handleChangeFilter}>
+        <option selected="selected">Default</option>
+        <option value="db">Data Base</option>
+        <option value="api">API</option>
+      </select>
       <select
         name="select"
         disabled={!temperaments}
         value={temp}
-        onChange={handleChange}
+        onChange={handleChangeTemp}
       >
         <option selected="selected">No one</option>
         {temperaments ? (

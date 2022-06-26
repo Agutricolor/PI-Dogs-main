@@ -58,3 +58,7 @@ export const getTemperaments = () => (dispatch) => {
 export const filterByTemperament = (temperament) => (dispatch) => {
   return dispatch({ type: "FILTER_BY_TEMPERAMENT", payload: temperament });
 };
+
+export const filterByApiOrDb = (filter) => (dispatch) => {
+  return dispatch({ type: "FILTER_DB_API", payload: filter });
+};

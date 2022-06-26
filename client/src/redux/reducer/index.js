@@ -43,6 +43,25 @@ function reducer(state = initialState, action) {
         ...state,
         showRaces: filteredRaces,
       };
+    case "FILTER_DB_API":
+      const allRaces = state.races;
+      if (action.payload === "db") {
+        const filteredRaces = allRaces.filter((race) => {
+          return isNaN(race.id);
+        });
+        return {
+          ...state,
+          showRaces: filteredRaces,
+        };
+      } else {
+        const filteredRaces = allRaces.filter((race) => {
+          return !isNaN(race.id);
+        });
+        return {
+          ...state,
+          showRaces: filteredRaces,
+        };
+      }
     default:
       return { ...state };
   }
