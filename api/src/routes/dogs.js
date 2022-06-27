@@ -11,10 +11,7 @@ router.get("/", async (req, res) => {
   );
 
   if (!name) {
-    const apiData = await axios.get(
-      "https://api.thedogapi.com/v1/breeds?api_key=29117eac-fbd3-4f74-9260-69b8c2959c19"
-    );
-    const neededData = apiData.data.map((dog) => {
+    const neededData = totalApiData.data.map((dog) => {
       return {
         id: dog.id,
         name: dog.name,
@@ -62,7 +59,7 @@ router.get("/", async (req, res) => {
   });
 
   if (dogDbData.length > 0) {
-    const totalData = dogApiData.data.concat(dogDbData[0].dataValues);
+    const totalData = dogApiData.data.concat(dogDbData);
     const neededData = totalData.map((dog) => {
       const dogImage = totalApiData.data.find((doggie) => {
         return doggie.id === dog.id;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getRaceByName } from "../../redux/actions";
+import { getRaceByName, resetRaces } from "../../redux/actions";
 import "./searchbar.css";
 
 function SearchBar({ paged }) {
@@ -14,6 +14,7 @@ function SearchBar({ paged }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(resetRaces());
     dispatch(getRaceByName(race));
     setRace("");
     paged(1);

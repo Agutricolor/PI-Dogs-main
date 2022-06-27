@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRaces } from "../../redux/actions";
+import { getRaces, getTemperaments, resetRaces } from "../../redux/actions";
 import Card from "../Card/card";
 import Navbar from "../Navbar/navbar";
 
@@ -37,13 +37,19 @@ function Home() {
 
   useEffect(() => {
     dispatch(getRaces());
+    dispatch(getTemperaments());
+    return () => {
+      dispatch(resetRaces());
+    };
   }, [dispatch]);
 
   return (
     <div className="home">
       <Navbar paged={changePage} />
       <button onClick={handlePrev}>Prev</button>
-      <span>Page {page}</span>
+      <span>
+        Page {page} of {amountOfPages}
+      </span>
       <button onClick={handleNext}>Next</button>
       {actualElements.map((race) => {
         return (

@@ -62,6 +62,57 @@ function reducer(state = initialState, action) {
           showRaces: filteredRaces,
         };
       }
+    case "FILTER_ASC_DESC":
+      let order;
+      if (action.payload === "asc") {
+        order = state.races.sort((a, b) => {
+          if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+          if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+          return 0;
+        });
+      }
+      if (action.payload === "desc") {
+        order = state.races.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
+          if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+          return 0;
+        });
+      }
+      if (action.payload === "weightA") {
+        order = state.races.sort((a, b) => {
+          const aWeight = a.weight.metric
+            ? a.weight.metric.split(" ")
+            : a.weight;
+          const bWeight = b.weight.metric
+            ? b.weight.metric.split(" ")
+            : b.weight;
+          if (Number(aWeight[0]) < Number(bWeight[0])) return -1;
+          if (Number(aWeight[0]) > Number(bWeight[0])) return 1;
+          return 0;
+        });
+      }
+      if (action.payload === "weightD") {
+        order = state.races.sort((a, b) => {
+          const aWeight = a.weight.metric
+            ? a.weight.metric.split(" ")
+            : a.weight;
+          const bWeight = b.weight.metric
+            ? b.weight.metric.split(" ")
+            : b.weight;
+          if (Number(aWeight[0]) > Number(bWeight[0])) return -1;
+          if (Number(aWeight[0]) < Number(bWeight[0])) return 1;
+          return 0;
+        });
+      }
+      return {
+        ...state,
+        showRaces: order,
+      };
+    case "RESET":
+      return {
+        ...state,
+        showRaces: [],
+      };
     default:
       return { ...state };
   }

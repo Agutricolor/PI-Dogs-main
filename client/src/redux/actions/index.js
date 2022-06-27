@@ -62,3 +62,11 @@ export const filterByTemperament = (temperament) => (dispatch) => {
 export const filterByApiOrDb = (filter) => (dispatch) => {
   return dispatch({ type: "FILTER_DB_API", payload: filter });
 };
+
+export const filterAscOrDesc = (filter) => (dispatch) => {
+  return dispatch({ type: "FILTER_ASC_DESC", payload: filter });
+};
+
+export const resetRaces = () => (dispatch) => {
+  return dispatch({ type: "RESET" });
+};
