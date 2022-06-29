@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   filterAscOrDesc,
   filterByApiOrDb,
@@ -69,7 +70,9 @@ function Navbar({ paged }) {
           <option value="disabled">Loading</option>
         )}
       </select>
-
+      <Link to="/dog">
+        <button>Create a Race</button>
+      </Link>
       <SearchBar paged={paged} />
     </div>
   );
