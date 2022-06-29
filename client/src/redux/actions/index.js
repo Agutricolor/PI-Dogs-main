@@ -26,7 +26,7 @@ export const getRaceById = (id) => (dispatch) => {
   axios
     .get(`http://localhost:3001/dogs/${id}`)
     .then((r) => {
-      return dispatch({ type: "GET_RACE_BY_ID", payload: r });
+      return dispatch({ type: "GET_RACE_BY_ID", payload: r.data });
     })
     .catch((err) => {
       console.log(err);
@@ -69,4 +69,8 @@ export const filterAscOrDesc = (filter) => (dispatch) => {
 
 export const resetRaces = () => (dispatch) => {
   return dispatch({ type: "RESET" });
+};
+
+export const resetDetail = () => (dispatch) => {
+  return dispatch({ type: "RESET_DETAIL" });
 };

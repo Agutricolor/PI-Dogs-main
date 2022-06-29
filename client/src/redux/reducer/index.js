@@ -1,6 +1,7 @@
 const initialState = {
   races: [],
   showRaces: [],
+  detail: {},
   temperaments: [],
 };
 
@@ -19,10 +20,10 @@ function reducer(state = initialState, action) {
         showRaces: action.payload,
       };
     case "GET_RACE_BY_ID":
+      // console.log(action.payload);
       return {
         ...state,
-        races: action.payload,
-        showRaces: action.payload,
+        detail: action.payload,
       };
     case "CREATE_RACE":
       return {
@@ -112,6 +113,11 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         showRaces: [],
+      };
+    case "RESET_DETAIL":
+      return {
+        ...state,
+        detail: {},
       };
     default:
       return { ...state };
