@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getRaceById, resetDetail } from "../../redux/actions";
+import "./Detail.css";
 
 function Detail() {
   const { id } = useParams();
@@ -20,7 +21,9 @@ function Detail() {
     <div className="detail">
       {detailInfo.temperament ? (
         <div>
-          <h1>Information about the dog race: {detailInfo.name}</h1>
+          <h1 className="title">
+            Information about the dog race: {detailInfo.name}
+          </h1>
           <img
             src={
               detailInfo.image
@@ -28,21 +31,24 @@ function Detail() {
                 : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png"
             }
             alt={detailInfo.image}
-            width={400}
+            width={600}
           />
-          <p>
+          <p className="info">
             Temperament:{" "}
             {isNaN(detailInfo.weight)
               ? detailInfo.temperament
               : detailInfo.temperament.join(", ")}
           </p>
-          <p>Weight: {detailInfo.weight}</p>
-          <p>Height: {detailInfo.height}</p>
-          <p>Years of life: {detailInfo.lifeYears}</p>
+          <p className="info">Weight: {detailInfo.weight} cms</p>
+          <p className="info">Height: {detailInfo.height} kgs</p>
+          <p className="info">Years of life: {detailInfo.lifeYears}</p>
         </div>
       ) : (
         <p>The required information can't be showed, please try again</p>
       )}
+      <Link to="/home">
+        <button className="home">Home</button>
+      </Link>
     </div>
   );
 }

@@ -44,29 +44,35 @@ function Home() {
   }, [dispatch]);
 
   return (
-    <div className="home">
+    <div>
       <Navbar paged={changePage} />
       <button onClick={handlePrev}>Prev</button>
       <span>
         Page {page} of {amountOfPages}
       </span>
       <button onClick={handleNext}>Next</button>
-      {actualElements.map((race) => {
-        return (
-          <Card
-            key={race.id}
-            id={race.id}
-            name={race.name}
-            temperament={race.temperament}
-            weight={isNaN(race.id) ? race.weight : race.weight.metric}
-            image={
-              race.image
-                ? race.image
-                : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png"
-            }
-          />
-        );
-      })}
+      {actualElements.length > 0 ? (
+        actualElements.map((race) => {
+          return (
+            <Card
+              key={race.id}
+              id={race.id}
+              name={race.name}
+              temperament={race.temperament}
+              weight={isNaN(race.id) ? race.weight : race.weight.metric}
+              image={
+                race.image
+                  ? race.image
+                  : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png"
+              }
+            />
+          );
+        })
+      ) : (
+        <h2>
+          A dog with the name searched, doesn't exist, try again with other name
+        </h2>
+      )}
     </div>
   );
 }

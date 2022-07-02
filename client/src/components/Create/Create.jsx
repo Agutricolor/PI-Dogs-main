@@ -90,22 +90,22 @@ function Create() {
       <div className="container">
         <h1>Create a new Race/Dog</h1>
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="inputs">
             <label>Name</label>
             <input type="text" value={form.name} onChange={handleNameChange} />
             {errors.name && <p className="danger">{errors.name}</p>}
           </div>
-          <div>
+          <div className="inputs">
             <label>Weight in kgs</label>
             <input type="number" onChange={handleWeightChange} />
             {errors.weight && <p className="danger">{errors.weight}</p>}
           </div>
-          <div>
+          <div className="inputs">
             <label>Height in cm</label>
             <input type="number" onChange={handleHeightChange} />
             {errors.height && <p className="danger">{errors.height}</p>}
           </div>
-          <div>
+          <div className="inputs">
             <label>Years of life</label>
             <input type="number" onChange={handleLifeChange} />
           </div>

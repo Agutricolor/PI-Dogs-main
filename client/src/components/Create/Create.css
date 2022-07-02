@@ -42,7 +42,7 @@
     padding: 5px
 }
 
-label {
+.inputs label {
     display: block;
     margin: 5px;
 }
@@ -52,11 +52,11 @@ label {
     text-decoration: overline;
 }
 
-input {
+.inputs input {
     border: 1px black solid;
 }
 
-input:focus {
+.inputs input:focus {
     width: 25%;
     border-radius: 10px;
 }

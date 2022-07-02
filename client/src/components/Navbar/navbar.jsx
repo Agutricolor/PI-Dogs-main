@@ -7,7 +7,7 @@ import {
   filterByTemperament,
   resetRaces,
 } from "../../redux/actions";
-import SearchBar from "../Searchbar/searchbar";
+import SearchBar from "../Searchbar/SearchBar";
 
 function Navbar({ paged }) {
   const dispatch = useDispatch();
