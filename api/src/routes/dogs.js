@@ -56,10 +56,30 @@ router.get("/", async (req, res) => {
   );
   const dogDbData = await Race.findAll({
     where: { name: { [Op.iLike]: name } },
+    include: {
+      model: Temper,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
   });
 
-  if (dogDbData.length > 0) {
-    const totalData = dogApiData.data.concat(dogDbData);
+  const dbRealData = dogDbData.map((r) => {
+    const temperaments = r.Tempers.map((t) => {
+      return t.name;
+    });
+    const temperament = temperaments.join(", ");
+    return {
+      id: r.id,
+      name: r.name,
+      weight: r.weight,
+      temperament: temperament,
+    };
+  });
+
+  if (dbRealData.length > 0) {
+    const totalData = dogApiData.data.concat(dbRealData);
     const neededData = totalData.map((dog) => {
       const dogImage = totalApiData.data.find((doggie) => {
         return doggie.id === dog.id;

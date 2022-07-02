@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createRace, getTemperaments } from "../../redux/actions";
+import "./Create.css";
+
+const validateForm = (form) => {
+  var errors = {};
+  if (form.name.length < 1) errors.name = "A name is required";
+  if (form.height < 1) errors.height = "You need to put height";
+  if (form.weight < 1) errors.weight = "You need to put weight";
+  return errors;
+};
 
 function Create() {
   const dispatch = useDispatch();
@@ -12,6 +21,8 @@ function Create() {
     lifeYears: 0,
     temperaments: [],
   });
+  const [errors, setErrors] = useState({});
+
   const handleAddTemp = (e) => {
     if (form.temperaments.includes(e.target.value)) return;
     setForm({
@@ -33,6 +44,7 @@ function Create() {
       ...form,
       name: e.target.value,
     });
+    setErrors(validateForm(form));
   };
 
   const handleHeightChange = (e) => {
@@ -40,6 +52,7 @@ function Create() {
       ...form,
       height: e.target.value,
     });
+    setErrors(validateForm(form));
   };
 
   const handleWeightChange = (e) => {
@@ -47,6 +60,7 @@ function Create() {
       ...form,
       weight: e.target.value,
     });
+    setErrors(validateForm(form));
   };
 
   const handleLifeChange = (e) => {
@@ -69,34 +83,60 @@ function Create() {
   };
   useEffect(() => {
     dispatch(getTemperaments());
-  }, [dispatch]);
+    setErrors(validateForm(form));
+  }, [dispatch, form]);
   return (
-    <div>
-      <h1>Create a new Race/Dog</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input type="text" value={form.name} onChange={handleNameChange} />
-        <label>Weight in kgs</label>
-        <input type="number" onChange={handleWeightChange} />
-        <label>Height in cm</label>
-        <input type="number" onChange={handleHeightChange} />
-        <label>Years of life</label>
-        <input type="number" onChange={handleLifeChange} />
-        <select defaultValue="" onChange={handleAddTemp}>
-          <option value="">Choose a temperament</option>
-          {temperaments.map((temp) => {
-            return <option value={temp}>{temp}</option>;
-          })}
-        </select>
-        <div className="temperaments">
-          {form.temperaments?.map((t) => (
-            <button name={t} onClick={handleRemoveTemp}>
-              {t}
-            </button>
-          ))}
-        </div>
-        <button type="submit">Create</button>
-      </form>
+    <div className="background">
+      <div className="container">
+        <h1>Create a new Race/Dog</h1>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name</label>
+            <input type="text" value={form.name} onChange={handleNameChange} />
+            {errors.name && <p className="danger">{errors.name}</p>}
+          </div>
+          <div>
+            <label>Weight in kgs</label>
+            <input type="number" onChange={handleWeightChange} />
+            {errors.weight && <p className="danger">{errors.weight}</p>}
+          </div>
+          <div>
+            <label>Height in cm</label>
+            <input type="number" onChange={handleHeightChange} />
+            {errors.height && <p className="danger">{errors.height}</p>}
+          </div>
+          <div>
+            <label>Years of life</label>
+            <input type="number" onChange={handleLifeChange} />
+          </div>
+          <div>
+            <select className="select" defaultValue="" onChange={handleAddTemp}>
+              <option value="">Choose a temperament</option>
+              {temperaments.map((temp) => {
+                return <option value={temp}>{temp}</option>;
+              })}
+            </select>
+          </div>
+          <div>
+            {form.temperaments?.map((t) => (
+              <button className="submit" name={t} onClick={handleRemoveTemp}>
+                {t}
+              </button>
+            ))}
+          </div>
+          <div>
+            {!errors.name && !errors.height && !errors.weight ? (
+              <div>
+                <button className="submit" type="submit">
+                  Create
+                </button>
+              </div>
+            ) : (
+              <h3 className="danger">Required info is missing</h3>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
