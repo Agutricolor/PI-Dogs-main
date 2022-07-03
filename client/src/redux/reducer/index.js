@@ -16,7 +16,7 @@ function reducer(state = initialState, action) {
     case "GET_RACE_BY_NAME":
       return {
         ...state,
-        races: action.payload,
+        // races: action.payload,
         showRaces: action.payload,
       };
     case "GET_RACE_BY_ID":
@@ -118,6 +118,11 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         detail: {},
+      };
+    case "GET_INFO":
+      return {
+        ...state,
+        showRaces: state.races,
       };
     default:
       return { ...state };

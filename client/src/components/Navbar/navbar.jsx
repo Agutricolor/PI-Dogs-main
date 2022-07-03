@@ -8,11 +8,11 @@ import {
   resetRaces,
 } from "../../redux/actions";
 import SearchBar from "../Searchbar/SearchBar";
+import "./navbar.css";
 
 function Navbar({ paged }) {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments);
-  //   console.log(temperaments);
   const [, setOrder] = useState("");
 
   const handleChangeTemp = (e) => {
@@ -20,7 +20,6 @@ function Navbar({ paged }) {
     dispatch(filterByTemperament(e.target.value));
     paged(1);
   };
-  //   console.log(temp);
 
   const handleChangeFilter = (e) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ function Navbar({ paged }) {
 
   return (
     <div className="navbar">
-      <select onChange={handleChangeFilterAsc}>
+      <select className="orderFilter" onChange={handleChangeFilterAsc}>
         <option selected="disabled" disabled={true}>
           Choose a filter
         </option>

@@ -11,16 +11,22 @@ export const getRaces = () => (dispatch) => {
     });
 };
 
-export const getRaceByName = (name) => (dispatch) => {
-  axios
-    .get(`http://localhost:3001/dogs?name=${name}`)
-    .then((r) => {
-      return dispatch({ type: "GET_RACE_BY_NAME", payload: r.data });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+export function getRaceByName(name) {
+  return async function (dispatch) {
+    try {
+      var namesData = await axios.get(
+        `http://localhost:3001/dogs?name=${name}`
+      );
+      return dispatch({
+        type: "GET_RACE_BY_NAME",
+        payload: namesData.data,
+      });
+    } catch (error) {
+      alert("The dog you are searching, doesn't exist, try again");
+      return dispatch({ type: "GET_INFO" });
+    }
+  };
+}
 
 export const getRaceById = (id) => (dispatch) => {
   axios
@@ -74,3 +80,7 @@ export const resetRaces = () => (dispatch) => {
 export const resetDetail = () => (dispatch) => {
   return dispatch({ type: "RESET_DETAIL" });
 };
+
+// export const getInfo = () => (dispatch) => {
+//   return dispatch({ type: "GET_INFO" });
+// };

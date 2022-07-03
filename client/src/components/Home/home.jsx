@@ -6,6 +6,7 @@ import Navbar from "../Navbar/navbar";
 
 function Home() {
   const dispatch = useDispatch();
+  const allRaces = useSelector((state) => state.races);
   const races = useSelector((state) => state.showRaces);
   const [page, setPage] = useState(1);
   const [elementsByPage] = useState(8);
@@ -13,9 +14,6 @@ function Home() {
   const firstElementIndex = lastElementIndex - elementsByPage;
   const actualElements = races.slice(firstElementIndex, lastElementIndex);
   const amountOfPages = races.length > 1 ? Math.ceil(races.length / 8) : 1;
-  // console.log(actualElements);
-  // console.log("1", races);
-  // console.log("2", races[0]);
 
   const changePage = (pageNumber) => {
     setPage(pageNumber);
@@ -36,7 +34,7 @@ function Home() {
   };
 
   useEffect(() => {
-    dispatch(getRaces());
+    if (allRaces.length < 1) dispatch(getRaces());
     dispatch(getTemperaments());
     return () => {
       dispatch(resetRaces());
@@ -52,7 +50,7 @@ function Home() {
       </span>
       <button onClick={handleNext}>Next</button>
       {actualElements.length > 0 ? (
-        actualElements.map((race) => {
+        actualElements?.map((race) => {
           return (
             <Card
               key={race.id}
@@ -69,9 +67,7 @@ function Home() {
           );
         })
       ) : (
-        <h2>
-          A dog with the name searched, doesn't exist, try again with other name
-        </h2>
+        <h2>Loading...</h2>
       )}
     </div>
   );

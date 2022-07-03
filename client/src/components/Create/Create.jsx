@@ -22,13 +22,14 @@ function Create() {
     temperaments: [],
   });
   const [errors, setErrors] = useState({});
-
+  console.log("form", form);
   const handleAddTemp = (e) => {
-    if (form.temperaments.includes(e.target.value)) return;
-    setForm({
-      ...form,
-      temperaments: [...form.temperaments, e.target.value],
-    });
+    if (!form.temperaments.includes(e.target.value)) {
+      setForm({
+        ...form,
+        temperaments: [...form.temperaments, e.target.value],
+      });
+    }
   };
 
   const handleRemoveTemp = (e) => {
@@ -39,40 +40,18 @@ function Create() {
     });
   };
 
-  const handleNameChange = (e) => {
+  const handleChange = (e) => {
     setForm({
       ...form,
-      name: e.target.value,
+      [e.target.name]: e.target.value,
     });
     setErrors(validateForm(form));
-  };
-
-  const handleHeightChange = (e) => {
-    setForm({
-      ...form,
-      height: e.target.value,
-    });
-    setErrors(validateForm(form));
-  };
-
-  const handleWeightChange = (e) => {
-    setForm({
-      ...form,
-      weight: e.target.value,
-    });
-    setErrors(validateForm(form));
-  };
-
-  const handleLifeChange = (e) => {
-    setForm({
-      ...form,
-      lifeYears: e.target.value,
-    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createRace(form));
+    console.log("submit", form);
     setForm({
       name: "",
       weight: 0,
@@ -92,22 +71,27 @@ function Create() {
         <form onSubmit={handleSubmit}>
           <div className="inputs">
             <label>Name</label>
-            <input type="text" value={form.name} onChange={handleNameChange} />
+            <input
+              name="name"
+              type="text"
+              value={form.name}
+              onChange={handleChange}
+            />
             {errors.name && <p className="danger">{errors.name}</p>}
           </div>
           <div className="inputs">
             <label>Weight in kgs</label>
-            <input type="number" onChange={handleWeightChange} />
+            <input name="weight" type="number" onChange={handleChange} />
             {errors.weight && <p className="danger">{errors.weight}</p>}
           </div>
           <div className="inputs">
             <label>Height in cm</label>
-            <input type="number" onChange={handleHeightChange} />
+            <input name="height" type="number" onChange={handleChange} />
             {errors.height && <p className="danger">{errors.height}</p>}
           </div>
           <div className="inputs">
             <label>Years of life</label>
-            <input type="number" onChange={handleLifeChange} />
+            <input name="lifeYears" type="number" onChange={handleChange} />
           </div>
           <div>
             <select className="select" defaultValue="" onChange={handleAddTemp}>

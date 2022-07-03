@@ -38,6 +38,7 @@ router.get("/", async (req, res) => {
         return t.name;
       });
       const temperament = temperaments.join(", ");
+      console.log("temperament", temperament);
       return {
         id: r.id,
         name: r.name,
@@ -104,11 +105,11 @@ router.get("/", async (req, res) => {
       }
     });
     if (neededData.length === 0) {
-      return res.json("No se encontró el perro");
+      return res.status(404).json("No se encontró el perro");
     } else return res.json(totalData);
   } else {
     if (dogApiData.data.length === 0) {
-      return res.json("No se encontró el perro");
+      return res.status(404).json("No se encontró el perro");
     } else {
       const neededData = dogApiData.data.map((dog) => {
         const dogImage = totalApiData.data.find((doggie) => {
@@ -207,25 +208,16 @@ router.post("/", async (req, res) => {
     height,
     lifeYears,
   });
-  // console.log(newRace.__proto__);
-  // temperaments debería ser un objeto con 2 propiedades, una que contenga temperamentos ya creados, y otra con temperamentos a crear
-  // debo crear los temperamentos que no existan y luego crear la relación entre raza y temperamentos
+
   if (temperaments) {
     temperaments.forEach(async (temp) => {
       const temperament = await Temper.findOne({ where: { name: temp } });
       if (temperament) {
         await newRace.setTempers(temperament.dataValues.id);
       }
-      await newRace.createTemper({ name: temp });
     });
   }
 
-  // if (temperaments.created) {
-  //   temperaments.created.forEach(async (temp) => {
-  //     const tempId = await Temper.findOne({ where: { name: temp } });
-  //     await newRace.addTemper(tempId.dataValues.id);
-  //   });
-  // }
   return res.send({ msg: "La raza ha sido creada con éxito", data: newRace });
 });
 
