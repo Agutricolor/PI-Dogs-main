@@ -38,7 +38,6 @@ router.get("/", async (req, res) => {
         return t.name;
       });
       const temperament = temperaments.join(", ");
-      console.log("temperament", temperament);
       return {
         id: r.id,
         name: r.name,
@@ -46,9 +45,6 @@ router.get("/", async (req, res) => {
         temperament: temperament,
       };
     });
-    // const asd = dbData.map(async (r) => {
-    //   const temperId = await Race_Temper.findAll({ where: { RaceId: r.id } });
-    // });
     return res.json(dbRealData.concat(neededData));
   }
 
@@ -196,11 +192,6 @@ router.post("/", async (req, res) => {
   if (!name || !weight || !height) {
     return res.status(404).send("Faltan datos");
   }
-
-  // const createdRace = await Race.findByPk(id);
-  // if (createdRace) {
-  //   return res.status(400).send("Esta raza ya ha sido creada");
-  // }
 
   const newRace = await Race.create({
     name,

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRaces, getTemperaments, resetRaces } from "../../redux/actions";
+import {
+  getInfo,
+  getRaces,
+  getTemperaments,
+  resetRaces,
+} from "../../redux/actions";
 import Card from "../Card/card";
 import Navbar from "../Navbar/navbar";
 
@@ -35,6 +40,7 @@ function Home() {
 
   useEffect(() => {
     if (allRaces.length < 1) dispatch(getRaces());
+    if (races.length < 1) dispatch(getInfo());
     dispatch(getTemperaments());
     return () => {
       dispatch(resetRaces());

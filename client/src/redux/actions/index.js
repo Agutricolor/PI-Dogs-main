@@ -74,13 +74,13 @@ export const filterAscOrDesc = (filter) => (dispatch) => {
 };
 
 export const resetRaces = () => (dispatch) => {
-  return dispatch({ type: "RESET" });
+  return dispatch({ type: "RESET_RACES" });
 };
 
 export const resetDetail = () => (dispatch) => {
   return dispatch({ type: "RESET_DETAIL" });
 };
 
-// export const getInfo = () => (dispatch) => {
-//   return dispatch({ type: "GET_INFO" });
-// };
+export const getInfo = () => (dispatch) => {
+  return dispatch({ type: "GET_INFO" });
+};
