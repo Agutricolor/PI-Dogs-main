@@ -9,6 +9,12 @@
   text-decoration: none;
 }
 
+.card img {
+  width: 80%;
+  height: 700px;
+  object-fit: cover;
+}
+
 .card {
   width: 45%;
   border: 1px solid green;

@@ -1,6 +1,8 @@
 .detail {
   background: url(../Images/detail_background.png);
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -27,6 +29,7 @@
   font-size: 16px;
   transition-duration: 0.4s;
   cursor: pointer;
+  margin: 15px;
 }
 
 .home:hover {

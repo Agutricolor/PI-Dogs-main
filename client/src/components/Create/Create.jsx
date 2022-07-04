@@ -87,21 +87,38 @@ function Create() {
           </div>
           <div className="inputs">
             <label>Weight in kgs</label>
-            <input name="weight" type="number" onChange={handleChange} />
+            <input
+              name="weight"
+              min={0}
+              type="number"
+              onChange={handleChange}
+            />
             {errors.weight && <p className="danger">{errors.weight}</p>}
           </div>
           <div className="inputs">
             <label>Height in cm</label>
-            <input name="height" type="number" onChange={handleChange} />
+            <input
+              name="height"
+              min={0}
+              type="number"
+              onChange={handleChange}
+            />
             {errors.height && <p className="danger">{errors.height}</p>}
           </div>
           <div className="inputs">
             <label>Years of life</label>
-            <input name="lifeYears" type="number" onChange={handleChange} />
+            <input
+              name="lifeYears"
+              min={0}
+              type="number"
+              onChange={handleChange}
+            />
           </div>
           <div>
             <select className="select" defaultValue="" onChange={handleAddTemp}>
-              <option value="">Choose a temperament</option>
+              <option disabled value="">
+                Choose a temperament
+              </option>
               {temperaments.map((temp) => {
                 return <option value={temp}>{temp}</option>;
               })}

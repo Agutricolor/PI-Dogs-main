@@ -3,6 +3,10 @@ span {
   font-family: "Courier New", Courier, monospace;
 }
 
+.pagedFoot {
+  padding: 50px;
+}
+
 .home-page {
   background: url(../Images/detail_background.png);
   background-size: cover;

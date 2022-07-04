@@ -79,8 +79,21 @@ function Home() {
             );
           })
         ) : (
-          <div className="lds-heart"><div></div></div>
+          <div className="lds-heart">
+            <div></div>
+          </div>
         )}
+      </div>
+      <div className="pagedFoot">
+        <button className="prev-next" onClick={handlePrev}>
+          Prev
+        </button>
+        <span>
+          Page {page} of {amountOfPages}
+        </span>
+        <button className="prev-next" onClick={handleNext}>
+          Next
+        </button>
       </div>
     </div>
   );
