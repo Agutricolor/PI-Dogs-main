@@ -7,7 +7,7 @@ import {
   filterByTemperament,
   resetRaces,
 } from "../../redux/actions";
-import SearchBar from "../Searchbar/SearchBar";
+import SearchBar from "../Searchbar/searchbar";
 import "./navbar.css";
 
 function Navbar({ paged }) {
