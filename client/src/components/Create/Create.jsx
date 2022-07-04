@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createRace, getTemperaments } from "../../redux/actions";
+import { useHistory } from "react-router-dom";
+import { createRace, getRaces, getTemperaments } from "../../redux/actions";
 import "./Create.css";
 
 const validateForm = (form) => {
@@ -31,6 +32,8 @@ function Create() {
     }
   };
 
+  const history = useHistory();
+
   const handleRemoveTemp = (e) => {
     e.preventDefault();
     setForm({
@@ -57,10 +60,15 @@ function Create() {
       lifeYears: 0,
       temperaments: [],
     });
+    alert("Dog created! Now, you are being redirectioned to the main page");
+    history.push("/home");
   };
   useEffect(() => {
     dispatch(getTemperaments());
     setErrors(validateForm(form));
+    return () => {
+      dispatch(getRaces());
+    };
   }, [dispatch, form]);
   return (
     <div className="background">

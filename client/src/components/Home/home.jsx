@@ -79,7 +79,7 @@ function Home() {
             );
           })
         ) : (
-          <h2>Loading...</h2>
+          <div className="lds-heart"><div></div></div>
         )}
       </div>
     </div>

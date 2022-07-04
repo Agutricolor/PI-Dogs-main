@@ -44,7 +44,11 @@ function Detail() {
           <p className="info">Years of life: {detailInfo.lifeYears}</p>
         </div>
       ) : (
-        <p>The required information can't be showed, please try again</p>
+        <div className="loader">
+          <div className="lds-heart">
+            <div></div>
+          </div>
+        </div>
       )}
       <Link to="/home">
         <button className="home">Home</button>
