@@ -1,0 +1,35 @@
+.search {
+    background-color: white;
+    border: 1px solid green;
+    width: 20%;
+    border-radius: 10px;
+    margin: 10px 0px 10px 10px;
+    transition-duration: 0.5s;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.search:hover {
+    font-size: 1.1em;
+}
+
+.search:focus {
+    outline: none;
+    font-size: 1.1em;
+}
+
+.searchSubmit {
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid green;
+    width: 5%;
+    border-radius: 10px;
+    text-align: center;
+    transition-duration: 0.5s;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 2px;
+}
+
+.searchSubmit:hover {
+    background-color: green;
+    color: white;
+}

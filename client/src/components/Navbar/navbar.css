@@ -1,3 +1,18 @@
-.orderFilter {
-    
+.filters {
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid green;
+    width: 10%;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    transition-duration: 0.5s;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.filters:hover {
+    background-color: green;
+    color: white;
+    font-size: 1.1em;
+    width: 18%;
 }

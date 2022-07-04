@@ -37,7 +37,7 @@ function Navbar({ paged }) {
 
   return (
     <div className="navbar">
-      <select className="orderFilter" onChange={handleChangeFilterAsc}>
+      <select className="filters" onChange={handleChangeFilterAsc}>
         <option selected="disabled" disabled={true}>
           Choose a filter
         </option>
@@ -46,7 +46,7 @@ function Navbar({ paged }) {
         <option value="weightA">Weight +</option>
         <option value="weightD">Weight -</option>
       </select>
-      <select onChange={handleChangeFilter}>
+      <select className="filters" onChange={handleChangeFilter}>
         <option selected="disabled" disabled={true}>
           Choose info
         </option>
@@ -54,6 +54,7 @@ function Navbar({ paged }) {
         <option value="api">API</option>
       </select>
       <select
+        className="filters"
         name="select"
         disabled={!temperaments}
         onChange={handleChangeTemp}
@@ -70,7 +71,7 @@ function Navbar({ paged }) {
         )}
       </select>
       <Link to="/dog">
-        <button>Create a Race</button>
+        <button className="filters">Create a Race</button>
       </Link>
       <SearchBar paged={paged} />
     </div>

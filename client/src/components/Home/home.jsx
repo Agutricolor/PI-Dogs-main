@@ -8,6 +8,7 @@ import {
 } from "../../redux/actions";
 import Card from "../Card/card";
 import Navbar from "../Navbar/navbar";
+import "./home.css";
 
 function Home() {
   const dispatch = useDispatch();
@@ -48,33 +49,39 @@ function Home() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="home-page">
       <Navbar paged={changePage} />
-      <button onClick={handlePrev}>Prev</button>
+      <button className="prev-next" onClick={handlePrev}>
+        Prev
+      </button>
       <span>
         Page {page} of {amountOfPages}
       </span>
-      <button onClick={handleNext}>Next</button>
-      {actualElements.length > 0 ? (
-        actualElements?.map((race) => {
-          return (
-            <Card
-              key={race.id}
-              id={race.id}
-              name={race.name}
-              temperament={race.temperament}
-              weight={isNaN(race.id) ? race.weight : race.weight.metric}
-              image={
-                race.image
-                  ? race.image
-                  : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png"
-              }
-            />
-          );
-        })
-      ) : (
-        <h2>Loading...</h2>
-      )}
+      <button className="prev-next" onClick={handleNext}>
+        Next
+      </button>
+      <div className="cards">
+        {actualElements.length > 0 ? (
+          actualElements?.map((race) => {
+            return (
+              <Card
+                key={race.id}
+                id={race.id}
+                name={race.name}
+                temperament={race.temperament}
+                weight={isNaN(race.id) ? race.weight : race.weight.metric}
+                image={
+                  race.image
+                    ? race.image
+                    : "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png"
+                }
+              />
+            );
+          })
+        ) : (
+          <h2>Loading...</h2>
+        )}
+      </div>
     </div>
   );
 }

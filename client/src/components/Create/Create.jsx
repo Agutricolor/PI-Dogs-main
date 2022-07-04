@@ -22,7 +22,6 @@ function Create() {
     temperaments: [],
   });
   const [errors, setErrors] = useState({});
-  console.log("form", form);
   const handleAddTemp = (e) => {
     if (!form.temperaments.includes(e.target.value)) {
       setForm({
@@ -51,7 +50,6 @@ function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createRace(form));
-    console.log("submit", form);
     setForm({
       name: "",
       weight: 0,

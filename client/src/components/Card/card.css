@@ -1,0 +1,25 @@
+.card h2 {
+  font-family: cursive;
+}
+.card p {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.card a {
+  text-decoration: none;
+}
+
+.card {
+  width: 45%;
+  border: 1px solid green;
+  margin: 15px;
+  border-radius: 30px;
+  transition-duration: 0.5s;
+}
+
+.card:hover {
+  font-size: 1.2em;
+  box-shadow: 32px 32px 89px 15px rgba(0, 255, 19, 0.68);
+  -webkit-box-shadow: 32px 32px 89px 15px rgba(0, 255, 19, 0.68);
+  -moz-box-shadow: 32px 32px 89px 15px rgba(0, 255, 19, 0.68);
+}
