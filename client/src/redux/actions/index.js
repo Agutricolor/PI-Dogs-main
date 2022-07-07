@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getRaces = () => (dispatch) => {
   axios
-    .get("http://localhost:3001/dogs")
+    .get("/dogs")
     .then((r) => {
       return dispatch({ type: "GET_RACES", payload: r.data });
     })
@@ -14,9 +14,7 @@ export const getRaces = () => (dispatch) => {
 export function getRaceByName(name) {
   return async function (dispatch) {
     try {
-      var namesData = await axios.get(
-        `http://localhost:3001/dogs?name=${name}`
-      );
+      var namesData = await axios.get(`/dogs?name=${name}`);
       return dispatch({
         type: "GET_RACE_BY_NAME",
         payload: namesData.data,
@@ -30,7 +28,7 @@ export function getRaceByName(name) {
 
 export const getRaceById = (id) => (dispatch) => {
   axios
-    .get(`http://localhost:3001/dogs/${id}`)
+    .get(`/dogs/${id}`)
     .then((r) => {
       return dispatch({ type: "GET_RACE_BY_ID", payload: r.data });
     })
@@ -41,7 +39,7 @@ export const getRaceById = (id) => (dispatch) => {
 
 export const createRace = (race) => (dispatch) => {
   axios
-    .post("http://localhost:3001/dogs", race)
+    .post("/dogs", race)
     .then((r) => {
       return dispatch({ type: "CREATE_RACE", payload: r.data });
     })
@@ -52,7 +50,7 @@ export const createRace = (race) => (dispatch) => {
 
 export const getTemperaments = () => (dispatch) => {
   axios
-    .get("http://localhost:3001/temperaments")
+    .get("/temperaments")
     .then((r) => {
       return dispatch({ type: "GET_TEMPERAMENTS", payload: r.data });
     })
